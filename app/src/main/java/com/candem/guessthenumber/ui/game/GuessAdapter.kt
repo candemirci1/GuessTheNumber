@@ -3,6 +3,7 @@ package com.candem.guessthenumber.ui.game
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.candem.guessthenumber.databinding.ItemGuessBinding
 import com.candem.guessthenumber.domain.model.Guess
@@ -24,6 +25,19 @@ class GuessAdapter: RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
             guessedNumber.text = getPrettyGuess(position, currentGuess.guessedNumber.toList())
             positiveCount.text = "+${currentGuess.result.first}"
             negativeCount.text = "-${currentGuess.result.second}"
+            if (currentGuess.result.first == 0) {
+                positiveCount.isVisible = false
+            }
+            if(currentGuess.result.second == 0) {
+                negativeCount.isVisible = false
+            }
+            if (currentGuess.result.first == 0 && currentGuess.result.second == 0) {
+                positiveCount.text = "0"
+                positiveCount.isVisible = true
+                negativeCount.isVisible = false
+
+            }
+
         }
     }
 
