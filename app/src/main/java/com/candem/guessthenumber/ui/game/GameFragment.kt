@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.candem.guessthenumber.databinding.FragmentGameBinding
 import com.candem.guessthenumber.domain.model.Guess
 import com.candem.guessthenumber.extensions.random
+import com.candem.guessthenumber.extensions.showMessage
 
 
 class GameFragment : Fragment() {
@@ -50,7 +51,13 @@ class GameFragment : Fragment() {
                     etGuess.text.clear()
                     val result = checkForResult(numberSet, guessSet)
                     if (adapter == null) {
-                        adapter = GuessAdapter()
+                        adapter = GuessAdapter { isCorrect ->
+                            if (isCorrect){
+                                requireContext().showMessage("Winner")
+                            } else {
+                                requireContext().showMessage("TRY AGAIN")
+                            }
+                        }
                         rvGuesses.adapter = adapter
                         adapter?.insertGuess(Guess(guessSet, result))
                     } else {
@@ -58,14 +65,19 @@ class GameFragment : Fragment() {
                     }
 
                 }
+
             }
         }
 
     }
 
     private fun isValidGuess(guess: String): Boolean {
+        if(guess.length != 4){
+            requireContext().showMessage("Enter Number With 4 digit")
+            return false
+        }
         if (guess[0] == '0') {
-            Toast.makeText(requireContext(), "Cannot start with zero", Toast.LENGTH_SHORT).show()
+            requireContext().showMessage("Cannot start with zero")
             return false
         }
 
@@ -75,7 +87,7 @@ class GameFragment : Fragment() {
                 for (i in index+1..3) {
                     if (digit == guess[i]) {
                         valid = false
-                        Toast.makeText(requireContext(), "Sayilar ayni olamaz", Toast.LENGTH_SHORT).show()
+                        requireContext().showMessage("Cannot include same number")
                         break
                     }
                 }
@@ -100,6 +112,8 @@ class GameFragment : Fragment() {
         }
         return Pair(correctPositionedNumberCount, wrongPositionedNumberCount)
     }
+
+
 
 
 }

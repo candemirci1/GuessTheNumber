@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.candem.guessthenumber.databinding.ItemGuessBinding
 import com.candem.guessthenumber.domain.model.Guess
 
-class GuessAdapter: RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
+class GuessAdapter(
+    private val onCorrectGuess: (Boolean) -> Unit
+) : RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
 
     private val guesses: MutableList<Guess> = mutableListOf()
 
@@ -16,7 +18,8 @@ class GuessAdapter: RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuessViewHolder {
         val binding = ItemGuessBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return GuessViewHolder(binding)    }
+        return GuessViewHolder(binding)
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GuessViewHolder, position: Int) {
@@ -28,15 +31,15 @@ class GuessAdapter: RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
             if (currentGuess.result.first == 0) {
                 positiveCount.isVisible = false
             }
-            if(currentGuess.result.second == 0) {
+            if (currentGuess.result.second == 0) {
                 negativeCount.isVisible = false
             }
             if (currentGuess.result.first == 0 && currentGuess.result.second == 0) {
                 positiveCount.text = "0"
                 positiveCount.isVisible = true
                 negativeCount.isVisible = false
-
             }
+            onCorrectGuess.invoke(currentGuess.result.first == 4)
 
         }
     }
@@ -46,7 +49,7 @@ class GuessAdapter: RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
                 guess[1] * 100 +
                 guess[2] * 10 +
                 guess[3]
-        return "${position+1}) $number"
+        return "${position + 1}) $number"
     }
 
     override fun getItemCount(): Int {
