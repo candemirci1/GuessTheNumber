@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.candem.guessthenumber.R
 import com.candem.guessthenumber.databinding.FragmentGameBinding
 import com.candem.guessthenumber.domain.model.Guess
+import com.candem.guessthenumber.extensions.random
 
 
 class GameFragment : Fragment() {
