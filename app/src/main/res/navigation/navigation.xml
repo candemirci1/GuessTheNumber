@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/gameFragment">
+    app:startDestination="@id/startGameFragment">
 
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.candem.guessthenumber.ui.game.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" />
+        tools:layout="@layout/fragment_game">
+        <argument
+            android:name="gameArg"
+            app:argType="com.candem.guessthenumber.domain.model.GameArg" />
+    </fragment>
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.candem.guessthenumber.ui.secondscreen.SecondFragment"
@@ -20,4 +24,12 @@
         android:name="com.candem.guessthenumber.ui.scorescreen.ScoreFragment"
         android:label="fragment_score"
         tools:layout="@layout/fragment_score" />
+    <fragment
+        android:id="@+id/startGameFragment"
+        android:name="com.candem.guessthenumber.ui.startscreen.StartGameFragment"
+        android:label="StartGameFragment">
+        <action
+            android:id="@+id/action_startGameFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
 </navigation>
