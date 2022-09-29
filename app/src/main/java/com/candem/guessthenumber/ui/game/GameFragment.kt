@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.navArgs
 import com.candem.guessthenumber.databinding.FragmentGameBinding
 import com.candem.guessthenumber.domain.model.Guess
 import com.candem.guessthenumber.extensions.random
@@ -15,7 +16,7 @@ import com.candem.guessthenumber.extensions.showMessage
 
 class GameFragment : Fragment() {
     private var binding: FragmentGameBinding? = null
-    private val numberSet: MutableSet<Int> = mutableSetOf()
+    private val args: GameFragmentArgs by navArgs()
     private val guessSet: MutableSet<Int> = mutableSetOf()
     private var adapter: GuessAdapter? = null
 
@@ -31,14 +32,8 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        while (numberSet.size < 4) {
-            val digit = (0..9).random()
-            if (!(digit == 0 && numberSet.isEmpty())) {
-                numberSet.add(digit)
-            }
-        }
 
-        Log.d("GameFragment", "computer number is: $numberSet")
+
 
         binding?.apply {
             btnOk.setOnClickListener {
@@ -49,7 +44,7 @@ class GameFragment : Fragment() {
                         guessSet.add(digit.toString().toInt())
                     }
                     etGuess.text.clear()
-                    val result = checkForResult(numberSet, guessSet)
+                    val result = checkForResult(args.gameArg.number, guessSet)
                     if (adapter == null) {
                         adapter = GuessAdapter { isCorrect ->
                             if (isCorrect){
