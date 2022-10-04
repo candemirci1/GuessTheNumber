@@ -2,16 +2,20 @@ package com.candem.guessthenumber.ui.game
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.candem.guessthenumber.databinding.FragmentGameBinding
 import com.candem.guessthenumber.domain.model.Guess
 import com.candem.guessthenumber.extensions.random
 import com.candem.guessthenumber.extensions.showMessage
+import com.google.android.material.snackbar.Snackbar
 
 
 class GameFragment : Fragment() {
@@ -19,7 +23,6 @@ class GameFragment : Fragment() {
     private val args: GameFragmentArgs by navArgs()
     private val guessSet: MutableSet<Int> = mutableSetOf()
     private var adapter: GuessAdapter? = null
-
 
 
     override fun onCreateView(
@@ -47,10 +50,16 @@ class GameFragment : Fragment() {
                     val result = checkForResult(args.gameArg.number, guessSet)
                     if (adapter == null) {
                         adapter = GuessAdapter { isCorrect ->
-                            if (isCorrect){
-                                requireContext().showMessage("Winner")
+                            if (isCorrect) {
+                                showOnSnackBar(
+                                    "WINNER",
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
                             } else {
-                                requireContext().showMessage("TRY AGAIN")
+                                showOnSnackBar("TRY AGAIN")
                             }
                         }
                         rvGuesses.adapter = adapter
@@ -67,22 +76,30 @@ class GameFragment : Fragment() {
     }
 
     private fun isValidGuess(guess: String): Boolean {
-        if(guess.length != 4){
-            requireContext().showMessage("Enter Number With 4 digit")
+        if (guess.length != 4) {
+            showOnSnackBar(
+                "Enter Number With 4 digit",
+                ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+            )
             return false
         }
         if (guess[0] == '0') {
-            requireContext().showMessage("Cannot start with zero")
+            showOnSnackBar(
+                "Cannot start with zero",
+                ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+            )
             return false
         }
-
         var valid = true
         guess.forEachIndexed { index, digit ->
             if (index != 3) {
-                for (i in index+1..3) {
+                for (i in index + 1..3) {
                     if (digit == guess[i]) {
                         valid = false
-                        requireContext().showMessage("Cannot include same number")
+                        showOnSnackBar(
+                            "Cannot include same number",
+                            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+                        )
                         break
                     }
                 }
@@ -109,6 +126,24 @@ class GameFragment : Fragment() {
     }
 
 
+    private fun showOnSnackBar(message: String, color: Int? = null) {
+        activity?.let {
+            val snackBar = Snackbar.make(
+                it.findViewById(android.R.id.content),
+                message,
+                Snackbar.LENGTH_SHORT
+            )
+            color?.let { safeColor -> snackBar.setBackgroundTint(safeColor) }
+
+            val params = snackBar.view.layoutParams as (FrameLayout.LayoutParams)
+            params.setMargins(16, 0, 16, 32)
+            snackBar.view.layoutParams = params
+            params.gravity = Gravity.CENTER
+            params.width = FrameLayout.LayoutParams.WRAP_CONTENT
+
+            snackBar.show()
+        }
+    }
 
 
 }
