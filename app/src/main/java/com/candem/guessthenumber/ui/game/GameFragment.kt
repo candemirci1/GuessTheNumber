@@ -1,20 +1,17 @@
 package com.candem.guessthenumber.ui.game
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
+import com.candem.guessthenumber.R
 import com.candem.guessthenumber.databinding.FragmentGameBinding
 import com.candem.guessthenumber.domain.model.Guess
-import com.candem.guessthenumber.extensions.random
-import com.candem.guessthenumber.extensions.showMessage
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -53,13 +50,14 @@ class GameFragment : Fragment() {
                             if (isCorrect) {
                                 showOnSnackBar(
                                     "WINNER",
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        android.R.color.holo_green_dark
-                                    )
+                                    R.drawable.bg_round_winner
                                 )
                             } else {
-                                showOnSnackBar("TRY AGAIN")
+                                showOnSnackBar(
+                                    "TRY AGAIN",
+                                    R.drawable.bg_round_again
+                                )
+
                             }
                         }
                         rvGuesses.adapter = adapter
@@ -79,14 +77,14 @@ class GameFragment : Fragment() {
         if (guess.length != 4) {
             showOnSnackBar(
                 "Enter Number With 4 digit",
-                ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+                R.drawable.bg_round_error
             )
             return false
         }
         if (guess[0] == '0') {
             showOnSnackBar(
                 "Cannot start with zero",
-                ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+                R.drawable.bg_round_error
             )
             return false
         }
@@ -98,7 +96,7 @@ class GameFragment : Fragment() {
                         valid = false
                         showOnSnackBar(
                             "Cannot include same number",
-                            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+                            R.drawable.bg_round_error
                         )
                         break
                     }
@@ -125,25 +123,23 @@ class GameFragment : Fragment() {
         return Pair(correctPositionedNumberCount, wrongPositionedNumberCount)
     }
 
-
-    private fun showOnSnackBar(message: String, color: Int? = null) {
+    private fun showOnSnackBar(message: String, background: Int) {
         activity?.let {
             val snackBar = Snackbar.make(
                 it.findViewById(android.R.id.content),
                 message,
                 Snackbar.LENGTH_SHORT
             )
-            color?.let { safeColor -> snackBar.setBackgroundTint(safeColor) }
+
 
             val params = snackBar.view.layoutParams as (FrameLayout.LayoutParams)
             params.setMargins(16, 0, 16, 32)
             snackBar.view.layoutParams = params
             params.gravity = Gravity.CENTER
             params.width = FrameLayout.LayoutParams.WRAP_CONTENT
+            snackBar.view.background = ContextCompat.getDrawable(requireContext(), background)
 
             snackBar.show()
         }
     }
-
-
 }
