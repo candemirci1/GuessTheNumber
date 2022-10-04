@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/drawable-v24/bg_round_winner.xml" value="0.2195" />
+        <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/drawable/bg_round_again.xml" value="0.2195" />
+        <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/drawable/bg_round_error.xml" value="0.2195" />
+        <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/drawable/bg_round_winner.xml" value="0.2195" />
         <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/drawable/ic_score.xml" value="0.1435" />
+        <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/drawable/shape_round_corner.xml" value="0.1" />
         <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/layout/activity_main.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/layout/fragment_game.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/can/AndroidStudioProjects/GuessTheNumber/app/src/main/res/layout/fragment_score.xml" value="0.36666666666666664" />
