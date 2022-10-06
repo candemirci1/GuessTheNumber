@@ -9,8 +9,9 @@ import com.candem.guessthenumber.databinding.ItemGuessBinding
 import com.candem.guessthenumber.domain.model.Guess
 
 class GuessAdapter(
-    private val onCorrectGuess: (Boolean) -> Unit
+    private val onCorrectGuess: (Boolean,Int) -> Unit
 ) : RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
+    var score = 100
 
     private val guesses: MutableList<Guess> = mutableListOf()
 
@@ -24,6 +25,7 @@ class GuessAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GuessViewHolder, position: Int) {
         val currentGuess = guesses[position]
+
         holder.binding.apply {
             guessedNumber.text = getPrettyGuess(position, currentGuess.guessedNumber.toList())
             positiveCount.text = "+${currentGuess.result.first}"
@@ -39,8 +41,13 @@ class GuessAdapter(
                 positiveCount.isVisible = true
                 negativeCount.isVisible = false
             }
-            onCorrectGuess.invoke(currentGuess.result.first == 4)
+            if(currentGuess.result.first == 4) {
+                onCorrectGuess.invoke(true,score)
 
+            } else {
+                score -= 10
+                onCorrectGuess.invoke(false,score)
+            }
         }
     }
 
