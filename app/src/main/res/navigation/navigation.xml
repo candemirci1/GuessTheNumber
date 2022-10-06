@@ -13,6 +13,9 @@
         <argument
             android:name="gameArg"
             app:argType="com.candem.guessthenumber.domain.model.GameArg" />
+        <action
+            android:id="@+id/action_gameFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
@@ -20,16 +23,27 @@
         android:label="fragment_second"
         tools:layout="@layout/fragment_second" />
     <fragment
-        android:id="@+id/scoreFragment"
-        android:name="com.candem.guessthenumber.ui.scorescreen.ScoreFragment"
-        android:label="fragment_score"
-        tools:layout="@layout/fragment_score" />
-    <fragment
         android:id="@+id/startGameFragment"
         android:name="com.candem.guessthenumber.ui.startscreen.StartGameFragment"
         android:label="StartGameFragment">
         <action
             android:id="@+id/action_startGameFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.candem.guessthenumber.ui.profilescreen.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.candem.guessthenumber.ui.scoreboard.ScoreFragment"
+        android:label="ScoreFragment" >
+        <action
+            android:id="@+id/action_scoreFragment_to_startGameFragment"
+            app:destination="@id/startGameFragment" />
+        <argument
+            android:name="score"
+            app:argType="integer" />
     </fragment>
 </navigation>

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.candem.guessthenumber.R
 import com.candem.guessthenumber.databinding.FragmentGameBinding
@@ -46,11 +47,14 @@ class GameFragment : Fragment() {
                     etGuess.text.clear()
                     val result = checkForResult(args.gameArg.number, guessSet)
                     if (adapter == null) {
-                        adapter = GuessAdapter { isCorrect ->
+                        adapter = GuessAdapter { isCorrect,score ->
                             if (isCorrect) {
+                                val action = GameFragmentDirections.actionGameFragmentToScoreFragment(score)
+                                findNavController().navigate(action)
                                 showOnSnackBar(
                                     "WINNER",
-                                    R.drawable.bg_round_winner
+                                    R.drawable.bg_round_winner,
+                                    SnackbarGravity.BOTTOM
                                 )
                             } else {
                                 showOnSnackBar(
@@ -123,7 +127,11 @@ class GameFragment : Fragment() {
         return Pair(correctPositionedNumberCount, wrongPositionedNumberCount)
     }
 
-    private fun showOnSnackBar(message: String, background: Int) {
+    private fun showOnSnackBar(
+        message: String,
+        background: Int,
+        gravity: SnackbarGravity = SnackbarGravity.CENTER
+    ) {
         activity?.let {
             val snackBar = Snackbar.make(
                 it.findViewById(android.R.id.content),
@@ -135,11 +143,19 @@ class GameFragment : Fragment() {
             val params = snackBar.view.layoutParams as (FrameLayout.LayoutParams)
             params.setMargins(16, 0, 16, 32)
             snackBar.view.layoutParams = params
-            params.gravity = Gravity.CENTER
+            when (gravity) {
+                SnackbarGravity.TOP -> params.gravity = Gravity.TOP
+                SnackbarGravity.CENTER -> params.gravity = Gravity.CENTER
+                SnackbarGravity.BOTTOM -> params.gravity = Gravity.BOTTOM
+            }
             params.width = FrameLayout.LayoutParams.WRAP_CONTENT
             snackBar.view.background = ContextCompat.getDrawable(requireContext(), background)
 
             snackBar.show()
         }
+    }
+
+    enum class SnackbarGravity {
+        TOP, BOTTOM, CENTER
     }
 }
