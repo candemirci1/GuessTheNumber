@@ -2,8 +2,11 @@ package com.candem.guessthenumber.ui.startscreen
 
 import androidx.lifecycle.ViewModel
 import com.candem.guessthenumber.extensions.random
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class StartGameViewModel: ViewModel() {
+@HiltViewModel
+class StartGameViewModel @Inject constructor(): ViewModel() {
 
     fun createRandomNumber(): MutableSet<Int> {
         val numberSet: MutableSet<Int> = mutableSetOf()

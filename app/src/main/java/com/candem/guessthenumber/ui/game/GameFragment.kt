@@ -14,8 +14,9 @@ import com.candem.guessthenumber.R
 import com.candem.guessthenumber.databinding.FragmentGameBinding
 import com.candem.guessthenumber.domain.model.Guess
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class GameFragment : Fragment() {
     private var binding: FragmentGameBinding? = null
     private val args: GameFragmentArgs by navArgs()

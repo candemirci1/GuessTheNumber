@@ -14,8 +14,9 @@ import com.candem.guessthenumber.databinding.FragmentGameBinding
 import com.candem.guessthenumber.databinding.FragmentScoreBinding
 import com.candem.guessthenumber.ui.game.GameFragmentArgs
 import com.candem.guessthenumber.ui.game.GameFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ScoreFragment : Fragment() {
     private var binding: FragmentScoreBinding? = null
     private val args: ScoreFragmentArgs by navArgs()
@@ -34,6 +35,8 @@ class ScoreFragment : Fragment() {
 
         binding?.tvPoint?.text = args.score.toString()
         viewModel.saveScore(KEY_SCORE, args.score)
+        viewModel.savePlayedGameCount(KEY_GAME_PLAYED_COUNT)
+
 
         binding?.btnRestart?.setOnClickListener {
             val action = ScoreFragmentDirections.actionScoreFragmentToStartGameFragment()
@@ -44,6 +47,7 @@ class ScoreFragment : Fragment() {
 
     companion object {
         private const val KEY_SCORE = "KEY_SCORE"
+        private const val KEY_GAME_PLAYED_COUNT = "KEY_GAME_PLAYED_COUNT"
     }
 
 

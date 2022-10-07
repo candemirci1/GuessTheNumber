@@ -11,8 +11,9 @@ import androidx.navigation.fragment.findNavController
 
 import com.candem.guessthenumber.databinding.FragmentStartGameBinding
 import com.candem.guessthenumber.domain.model.GameArg
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class StartGameFragment : Fragment() {
 
     private val viewModel: StartGameViewModel by viewModels()
