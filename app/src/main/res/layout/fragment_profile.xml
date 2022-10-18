@@ -1,14 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profilescreen.ProfileFragment">
+    tools:context=".ui.game.GameFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tv_total_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOTAL POINT:"
+        android:layout_marginStart="16dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_total_game"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_total_point_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_total_point"
+        app:layout_constraintStart_toEndOf="@+id/tv_total_point"
+        app:layout_constraintTop_toTopOf="@+id/tv_total_point"
+        tools:text="100" />
+
+    <TextView
+        android:id="@+id/tv_total_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TOTAL GAME:"
+        android:layout_marginStart="16dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_average"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total_point" />
+
+    <TextView
+        android:id="@+id/tv_total_game_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_total_game"
+        app:layout_constraintStart_toEndOf="@+id/tv_total_game"
+        app:layout_constraintTop_toTopOf="@+id/tv_total_game"
+        tools:text="100" />
+
+
+    <TextView
+        android:id="@+id/tv_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AVERAGE POINT:"
+        android:layout_marginStart="16dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_total_game" />
+
+    <TextView
+        android:id="@+id/tv_average_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_average"
+        app:layout_constraintStart_toEndOf="@+id/tv_average"
+        app:layout_constraintTop_toTopOf="@+id/tv_average"
+        tools:text="100" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
